@@ -3,6 +3,7 @@ SerieNumerosOracle19c:
 
 <img width="1254" height="1254" alt="image" src="https://github.com/user-attachments/assets/e5cb9839-aee3-43fe-954c-8148dba49cb9" />  
 
+<img width="2553" height="1079" alt="image" src="https://github.com/user-attachments/assets/8e7261a3-ed19-48a6-801d-d905c7b14ca5" />        
 ```
 
 Programa desarrollado en Java con IntelliJ IDEA, JDBC y Oracle Database
