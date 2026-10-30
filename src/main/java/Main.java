@@ -81,10 +81,21 @@ public class Main
                 System.out.println("--------------------------------");
 
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                // Revertir inserciones si ocurre un error
+                conexion.rollback();
+
+                System.out.println(
+                        "Error durante el procesamiento de los datos."
+                );
+
+                System.out.println(e.getMessage());
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(
+                    "Error al cerrar o utilizar la conexion."
+            );
+
+            System.out.println(e.getMessage()); 
         }
     }
 }
