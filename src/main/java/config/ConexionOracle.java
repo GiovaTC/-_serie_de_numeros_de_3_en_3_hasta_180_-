@@ -1,7 +1,6 @@
 package config;
 
-import com.sun.jdi.connect.spi.Connection;
-
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -20,16 +19,21 @@ public class ConexionOracle {
                     PASSWORD
             );
 
-            // Se desactiva autocommit para confirmar la transacción
-            // después de insertar todos los números .
-            ((java.sql.Connection) conexion).setAutoCommit(false);
+            // Desactivar autocommit para controlar la transaccion
+            conexion.setAutoCommit(false);
 
-            System.out.println("CONEXION exitosa con oracle!");
+            System.out.println(
+                    "CONEXION exitosa con Oracle 19c!"
+            );
 
             return conexion;
 
         } catch (SQLException e) {
-            System.out.println("Error al conectar con Oracle.");
+
+            System.out.println(
+                    "Error al conectar con Oracle."
+            );
+
             System.out.println(e.getMessage());
 
             return null;
