@@ -33,6 +33,6 @@ public class ConexionOracle {
             System.out.println(e.getMessage());
 
             return null;
-        }   
+        }
     }
 }

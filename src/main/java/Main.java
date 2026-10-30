@@ -1,15 +1,90 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+import config.ConexionOracle;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+
+        // variables del programa.
+        int  inicio = 3;
+        int limite = 180;
+        int incremento = 3;
+
+        int contador = 0;
+
+        // ESTABLECER CONEXION con oracle.
+        try (Connection conexion = (Connection) ConexionOracle.conectar())
+        {
+
+            if (conexion == null)
+            {
+                System.out.println(
+                        "No fue posible establecer la conexion."
+                );
+                return;
+            }
+
+            // SQL para insertar los numeros.
+            String sql =
+                    "INSERT INTO SERIE_NUMEROS (NUMERO) VALUES (?)";
+
+            try (PreparedStatement sentencia = conexion.prepareStatement(sql)) {
+
+                // ENCABEZADO.
+                // Encabezado
+                System.out.println("--------------------------------");
+                System.out.println("SERIE DE NUMEROS DE 3 EN 3");
+                System.out.println("--------------------------------");
+
+                // GENERAR la serie.
+                for (int numero = inicio; numero <= limite; numero += incremento)
+                {
+                    // IMPRIMIR el numero en consola.
+                    System.out.println(
+                            "Numero generado: " + numero
+                    );
+
+                    // PREPARAR insercion en Oracle!
+                    sentencia.setInt(1, numero);
+
+                    // EJECUTAR insercion.
+                    sentencia.executeUpdate();
+
+                    contador ++;
+                }
+
+                // confirmar transaccion!
+                conexion.commit();
+
+                // MOSTRAR resultado.
+                System.out.println("--------------------------------");
+                System.out.println(
+                        "Proceso finalizado correctamente."
+                );
+
+                System.out.println(
+                        "Total de numeros generados: " + contador
+                );
+
+                System.out.println(
+                        "Ultimo numero generado: " + limite
+                );
+
+                System.out.println(
+                        "Informacion almacenada en Oracle 19c."
+                );
+
+                System.out.println("--------------------------------");
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }
